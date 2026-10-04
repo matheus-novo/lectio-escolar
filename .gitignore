@@ -1,0 +1,38 @@
+# ==========================================
+# .NET / C# (Back-end)
+# ==========================================
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userossc
+appsettings.Development.json
+appsettings.Production.json
+
+# ==========================================
+# Node / React (Front-end)
+# ==========================================
+node_modules/
+src/frontend/dist/
+src/frontend/build/
+.env
+.env.local
+.env.development.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# Arquivos de Upload do Local Storage (Mídia)
+# ==========================================
+src/backend/LectioEscolar.Api/Uploads/*
+!src/backend/LectioEscolar.Api/Uploads/.gitkeep
+
+# ==========================================
+# Sistema Operacional
+# ==========================================
+.DS_Store
+Thumbs.db
