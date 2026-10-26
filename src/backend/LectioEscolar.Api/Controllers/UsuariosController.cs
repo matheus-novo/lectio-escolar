@@ -53,7 +53,9 @@ namespace LectioEscolar.Api.Controllers
                     Nome = usuario.Nome,
                     Email = usuario.Email,
                     Perfil = usuario.Perfil,
-                    Ativo = usuario.Ativo
+                    Ativo = usuario.Ativo,
+                    Matricula = usuario is Aluno a ? a.Matricula : null,
+                    RegistroFuncional = usuario is Professor p ? p.RegistroFuncional : null
                 }
             });
         }
@@ -129,9 +131,16 @@ namespace LectioEscolar.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> ListarPorId(int id)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userRoleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (userRoleClaim != "Administrador" && userRoleClaim != "Professor" && userIdClaim != id.ToString())
+            {
+                return Forbid();
+            }
+
             var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario == null) return NotFound(new { mensagem = "Usuário não encontrado." });
 
