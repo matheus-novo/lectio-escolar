@@ -6,6 +6,8 @@ namespace LectioEscolar.Api.Entities
     {
         public string Matricula { get; set; } = string.Empty;
 
+        public ICollection<AlunoTurma> AlunosTurmas { get; set; } = new List<AlunoTurma>();
+
         public Aluno()
         {
             Perfil = PerfilUsuario.Aluno;

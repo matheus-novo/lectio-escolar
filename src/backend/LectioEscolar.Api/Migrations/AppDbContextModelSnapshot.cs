@@ -22,6 +22,54 @@ namespace LectioEscolar.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("LectioEscolar.Api.Entities.AlunoTurma", b =>
+                {
+                    b.Property<int>("AlunoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DataMatricula")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("AlunoId", "TurmaId");
+
+                    b.HasIndex("TurmaId");
+
+                    b.ToTable("AlunosTurmas");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoLetivo")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Turno")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Turmas");
+                });
+
             modelBuilder.Entity("LectioEscolar.Api.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -95,6 +143,35 @@ namespace LectioEscolar.Api.Migrations
                         .HasColumnType("text");
 
                     b.HasDiscriminator().HasValue("Professor");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.AlunoTurma", b =>
+                {
+                    b.HasOne("LectioEscolar.Api.Entities.Aluno", "Aluno")
+                        .WithMany("AlunosTurmas")
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LectioEscolar.Api.Entities.Turma", "Turma")
+                        .WithMany("AlunosTurmas")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Aluno");
+
+                    b.Navigation("Turma");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
+                {
+                    b.Navigation("AlunosTurmas");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Aluno", b =>
+                {
+                    b.Navigation("AlunosTurmas");
                 });
 #pragma warning restore 612, 618
         }
