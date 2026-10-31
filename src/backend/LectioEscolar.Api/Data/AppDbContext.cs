@@ -15,6 +15,7 @@ namespace LectioEscolar.Api.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<AlunoTurma> AlunosTurmas { get; set; }
+        public DbSet<Disciplina> Disciplinas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,7 +32,7 @@ namespace LectioEscolar.Api.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            // Configuração da chave composta e relacionamentos da tabela associativa AlunoTurma
+            // Mapeamento da associativa AlunoTurma
             modelBuilder.Entity<AlunoTurma>()
                 .HasKey(at => new { at.AlunoId, at.TurmaId });
 
@@ -46,6 +47,19 @@ namespace LectioEscolar.Api.Data
                 .WithMany(t => t.AlunosTurmas)
                 .HasForeignKey(at => at.TurmaId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Mapeamento de Disciplina com Turma e Professor
+            modelBuilder.Entity<Disciplina>()
+                .HasOne(d => d.Turma)
+                .WithMany(t => t.Disciplinas)
+                .HasForeignKey(d => d.TurmaId)
+                .OnDelete(DeleteBehavior.Restrict); // Evita exclusão acidental da turma se houver matérias
+
+            modelBuilder.Entity<Disciplina>()
+                .HasOne(d => d.Professor)
+                .WithMany(p => p.Disciplinas)
+                .HasForeignKey(d => d.ProfessorId)
+                .OnDelete(DeleteBehavior.Restrict); // Evita exclusão acidental do professor responsável
         }
     }
 }

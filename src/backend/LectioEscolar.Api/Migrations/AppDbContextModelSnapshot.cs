@@ -40,6 +40,42 @@ namespace LectioEscolar.Api.Migrations
                     b.ToTable("AlunosTurmas");
                 });
 
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Disciplina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProfessorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.HasIndex("TurmaId");
+
+                    b.ToTable("Disciplinas");
+                });
+
             modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
                 {
                     b.Property<int>("Id")
@@ -164,14 +200,40 @@ namespace LectioEscolar.Api.Migrations
                     b.Navigation("Turma");
                 });
 
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Disciplina", b =>
+                {
+                    b.HasOne("LectioEscolar.Api.Entities.Professor", "Professor")
+                        .WithMany("Disciplinas")
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LectioEscolar.Api.Entities.Turma", "Turma")
+                        .WithMany("Disciplinas")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Professor");
+
+                    b.Navigation("Turma");
+                });
+
             modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
                 {
                     b.Navigation("AlunosTurmas");
+
+                    b.Navigation("Disciplinas");
                 });
 
             modelBuilder.Entity("LectioEscolar.Api.Entities.Aluno", b =>
                 {
                     b.Navigation("AlunosTurmas");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Professor", b =>
+                {
+                    b.Navigation("Disciplinas");
                 });
 #pragma warning restore 612, 618
         }

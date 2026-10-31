@@ -11,5 +11,7 @@ namespace LectioEscolar.Api.Entities
 
         // Propriedade de navegação para a relação N:N
         public ICollection<AlunoTurma> AlunosTurmas { get; set; } = new List<AlunoTurma>();
+
+        public ICollection<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
     }
 }
