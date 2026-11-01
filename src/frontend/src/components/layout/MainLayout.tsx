@@ -1,8 +1,10 @@
 import {
+  BookMarked,
   BookOpen,
   Library,
   LogOut,
   Menu,
+  School,
   ShieldCheck,
   UserCircle,
   Users,
@@ -33,6 +35,18 @@ const MENU_ITEMS: NavMenuItem[] = [
     to: '/admin/usuarios',
     icon: Users,
     allowedRoles: ['Administrador', 'Professor'],
+  },
+  {
+    label: 'Turmas',
+    to: '/admin/turmas',
+    icon: School,
+    allowedRoles: ['Administrador'],
+  },
+  {
+    label: 'Disciplinas',
+    to: '/admin/disciplinas',
+    icon: BookMarked,
+    allowedRoles: ['Administrador'],
   },
   {
     label: 'Meu Perfil',
