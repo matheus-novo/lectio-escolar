@@ -4,6 +4,7 @@ using LectioEscolar.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using LectioEscolar.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 DotNetEnv.Env.Load();
@@ -41,6 +42,8 @@ var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IFileStorageService, LocalStorageService>();
 
 builder.Services.AddCors(options =>
 {

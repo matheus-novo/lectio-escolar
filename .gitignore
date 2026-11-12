@@ -28,6 +28,7 @@ yarn-error.log*
 # ==========================================
 # Arquivos de Upload do Local Storage (Mídia)
 # ==========================================
+src/backend/LectioEscolar.Api/Storage/*
 src/backend/LectioEscolar.Api/Uploads/*
 !src/backend/LectioEscolar.Api/Uploads/.gitkeep
 
