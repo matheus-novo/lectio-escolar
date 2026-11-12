@@ -15,5 +15,7 @@ namespace LectioEscolar.Api.Entities
         // Vínculo com Professor (N:1)
         public int ProfessorId { get; set; }
         public Professor Professor { get; set; } = null!;
+
+        public ICollection<MaterialDidatico> Materiais { get; set; } = new List<MaterialDidatico>();
     }
 }

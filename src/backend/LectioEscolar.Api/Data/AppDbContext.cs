@@ -16,6 +16,7 @@ namespace LectioEscolar.Api.Data
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<AlunoTurma> AlunosTurmas { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<MaterialDidatico> MateriaisDidaticos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +61,32 @@ namespace LectioEscolar.Api.Data
                 .WithMany(p => p.Disciplinas)
                 .HasForeignKey(d => d.ProfessorId)
                 .OnDelete(DeleteBehavior.Restrict); // Evita exclusão acidental do professor responsável
+
+            modelBuilder.Entity<MaterialDidatico>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+
+                entity.Property(m => m.Titulo).IsRequired().HasMaxLength(150);
+                entity.Property(m => m.NomeOriginal).IsRequired().HasMaxLength(255);
+                entity.Property(m => m.NomeArquivo).IsRequired().HasMaxLength(255);
+                entity.Property(m => m.ContentType).IsRequired().HasMaxLength(100);
+                entity.Property(m => m.HashSha256).IsRequired().HasMaxLength(64);
+
+                // Índice para busca rápida de duplicatas por hash
+                entity.HasIndex(m => m.HashSha256);
+
+                // Chave estrangeira anulável com trava Restrict
+                entity.HasOne(m => m.Disciplina)
+                    .WithMany(d => d.Materiais)
+                    .HasForeignKey(m => m.DisciplinaId)
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(m => m.Professor)
+                    .WithMany()
+                    .HasForeignKey(m => m.ProfessorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }

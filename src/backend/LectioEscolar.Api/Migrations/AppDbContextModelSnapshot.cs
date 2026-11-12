@@ -76,6 +76,77 @@ namespace LectioEscolar.Api.Migrations
                     b.ToTable("Disciplinas");
                 });
 
+            modelBuilder.Entity("LectioEscolar.Api.Entities.MaterialDidatico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Categoria")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("DisciplinaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HashSha256")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("NomeArquivo")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("NomeOriginal")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<int>("ProfessorId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Publico")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("TamanhoBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplinaId");
+
+                    b.HasIndex("HashSha256");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.ToTable("MateriaisDidaticos");
+                });
+
             modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
                 {
                     b.Property<int>("Id")
@@ -217,6 +288,29 @@ namespace LectioEscolar.Api.Migrations
                     b.Navigation("Professor");
 
                     b.Navigation("Turma");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.MaterialDidatico", b =>
+                {
+                    b.HasOne("LectioEscolar.Api.Entities.Disciplina", "Disciplina")
+                        .WithMany("Materiais")
+                        .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LectioEscolar.Api.Entities.Usuario", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Disciplina");
+
+                    b.Navigation("Professor");
+                });
+
+            modelBuilder.Entity("LectioEscolar.Api.Entities.Disciplina", b =>
+                {
+                    b.Navigation("Materiais");
                 });
 
             modelBuilder.Entity("LectioEscolar.Api.Entities.Turma", b =>
