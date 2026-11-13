@@ -6,9 +6,11 @@ namespace LectioEscolar.Api.Dtos
     {
         public string Titulo { get; set; } = string.Empty;
         public string? Descricao { get; set; }
+        public string? Autor { get; set; }
+        public int? AnoPublicacao { get; set; }
         public CategoriaMaterial Categoria { get; set; }
-        public bool Publico { get; set; } = false; // Se for acervo geral, marcar true
-        public int? DisciplinaId { get; set; } // Obrigatório apenas se Publico for false
+        public bool Publico { get; set; } = false;
+        public int? DisciplinaId { get; set; }
         public IFormFile Arquivo { get; set; } = null!;
     }
 }

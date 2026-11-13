@@ -8,25 +8,28 @@ namespace LectioEscolar.Api.Entities
         public string Titulo { get; set; } = string.Empty;
         public string? Descricao { get; set; }
 
+        // Metadados Bibliográficos (específicos para Livros / Obras literárias)
+        public string? Autor { get; set; }
+        public int? AnoPublicacao { get; set; }
+
         // Metadados do Arquivo Físico
         public string NomeOriginal { get; set; } = string.Empty;
-        public string NomeArquivo { get; set; } = string.Empty;
+        public string NomeArquivo { get; set; } = string.Empty; // GUID físico gravado em disco
         public string ContentType { get; set; } = string.Empty;
         public long TamanhoBytes { get; set; }
         public string HashSha256 { get; set; } = string.Empty;
 
+        // Biblioteca vs. Disciplina
         public CategoriaMaterial Categoria { get; set; }
-        public bool Publico { get; set; } = false; // true = Acervo Geral da Biblioteca Pública
+        public bool Publico { get; set; } = false; // Acervo Geral
         public bool Ativo { get; set; } = true;
 
         public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
         public DateTime? DataAtualizacao { get; set; }
 
-        // Vínculo opcional com Disciplina (null se for acervo geral da escola)
         public int? DisciplinaId { get; set; }
         public Disciplina? Disciplina { get; set; }
 
-        // Docente ou Administrador responsável pelo envio
         public int ProfessorId { get; set; }
         public Usuario Professor { get; set; } = null!;
     }

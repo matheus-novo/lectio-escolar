@@ -67,6 +67,7 @@ namespace LectioEscolar.Api.Data
                 entity.HasKey(m => m.Id);
 
                 entity.Property(m => m.Titulo).IsRequired().HasMaxLength(150);
+                entity.Property(m => m.Autor).HasMaxLength(150);
                 entity.Property(m => m.NomeOriginal).IsRequired().HasMaxLength(255);
                 entity.Property(m => m.NomeArquivo).IsRequired().HasMaxLength(255);
                 entity.Property(m => m.ContentType).IsRequired().HasMaxLength(100);

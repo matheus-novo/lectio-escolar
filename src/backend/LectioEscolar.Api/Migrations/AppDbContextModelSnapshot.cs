@@ -84,8 +84,15 @@ namespace LectioEscolar.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AnoPublicacao")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Autor")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<int>("Categoria")
                         .HasColumnType("integer");

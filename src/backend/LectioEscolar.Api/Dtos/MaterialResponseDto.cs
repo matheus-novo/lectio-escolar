@@ -7,6 +7,8 @@ namespace LectioEscolar.Api.Dtos
         public int Id { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string? Descricao { get; set; }
+        public string? Autor { get; set; }
+        public int? AnoPublicacao { get; set; }
         public string NomeOriginal { get; set; } = string.Empty;
         public long TamanhoBytes { get; set; }
         public string ContentType { get; set; } = string.Empty;
@@ -17,7 +19,9 @@ namespace LectioEscolar.Api.Dtos
         public DateTime DataCriacao { get; set; }
         public int? DisciplinaId { get; set; }
         public string? NomeDisciplina { get; set; }
+        public int? TurmaId { get; set; }
+        public string? NomeTurma { get; set; }
         public int ProfessorId { get; set; }
-        public string NomeProfessor { get; set; } = string.Empty;
+        public string NomeProfessor { get; set; } = string.Empty; // Quem publicou na plataforma
     }
 }
